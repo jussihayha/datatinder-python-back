@@ -15,11 +15,12 @@ def filter_extra_data():
     for i in range(len(unfiltered_file)):
         movie_object = {
                 "id": set_id(unfiltered_file[i]),
-                "name": set_title(unfiltered_file[i]),
-                "alternative_name": set_name(unfiltered_file[i]),
-                "other_alternative_name": set_alternative_name(unfiltered_file[i]),
+                "title": set_title(unfiltered_file[i]),
+                "transmission_title": set_transmission_title(unfiltered_file[i]),
+                "part_of_series_title": set_part_of_series_title(unfiltered_file[i]),
                 "genres": set_genres(unfiltered_file[i]),
-                "publication_event": set_publication_event(unfiltered_file[i])
+                "publication_event": set_publication_event(unfiltered_file[i]),
+                "image_id": set_image_id(unfiltered_file[i])
                 }
         combined_array.append(movie_object)
     save_json(combined_array)
@@ -61,20 +62,20 @@ def set_genres(movie):
     return temp_array
 
 def set_title(movie):
-    """ Returns title from object if available """
+    """ Returns title from object. First tries finnish, if does not exist then gets swedish title """
     try:
         return movie['title']['fi']
     except KeyError:
         return movie['title']['sv']
 
-def set_name(movie):
+def set_transmission_title(movie):
     """ Returns transmissionTitle from object if available """
     try:
         return movie['transmissionTitle']
     except KeyError:
         return ''
 
-def set_alternative_name(movie):
+def set_part_of_series_title(movie):
     """ Returns alternative_name from object if available """
     try:
         return movie['partOfSeries']['title']['fi']
@@ -90,10 +91,22 @@ def set_publication_event(movie):
     except KeyError:
         return ''
 
+def set_image_id(movie):
+    """ Returns image ID, if available """
+    try:
+        return movie['image']
+    except KeyError:
+        return ''
+def set_description(movie):
+    """ Returns description of the object, if available """
+    try:
+        return movie['description']
+    except KeyError:
+        return ''
+
 def init():
     """ Initializes main-function. Used for achieving 100% test coverage """
     if __name__ == '__main__':
         sys.exit(main())
 
 init()
-                                  

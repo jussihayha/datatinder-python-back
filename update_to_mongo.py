@@ -10,10 +10,11 @@ def main():
     """ Start script, print when done """
     load_dotenv()
     #send_data()
-    print_data()
+    if sys.argv[1] == "print":
+        print_data()
 
 def connect():
-    """ Should be generalized so that you can send atleast database and 
+    """ Should be generalized so that you can send atleast database and
     collection as parameters """
     url = os.getenv('MONGO_URL')
     client = MongoClient(url)
@@ -21,12 +22,12 @@ def connect():
     collection = client.YLE.rajapinta
 
     return collection
-    
+
 
 def open_json():
-    """ Opens JSON-file and returns it as a variable 
+    """ Opens JSON-file and returns it as a variable
     To be replaced with function from imports """
-    with open ("2021-02-16-filtered.json", "r") as data:
+    with open("2021-02-16-filtered.json", "r") as data:
         json_data = json.load(data)
         return json_data
     return
@@ -49,9 +50,17 @@ def print_data():
         print(document['id'])
 
     print("Work complete!")
-    
+
+def get_single_program(sys.argv[1):
+    """ Returns single program """
+    client = connect():
+
+
 def init():
-    """ Initializes main-function. Used for achieving 100% test coverage """
+    """ Initializes main-function. Used for achieving 100% test coverage"""
+    if len(sys.argv) < 2:
+        print("Insert either ID, or 'update' to update data")
+        sys.exit()
     if __name__ == '__main__':
-         sys.exit(main())
+        sys.exit(main())
 init()
