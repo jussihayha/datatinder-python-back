@@ -11,7 +11,7 @@ def main():
 def filter_extra_data():
     """ Filter unused data from JSON-file and return a cleaned JSON-file """
     combined_array = []
-    unfiltered_file = open_json()
+    unfiltered_file = open_json("unfiltered")
     for i in range(len(unfiltered_file)):
         movie_object = {
                 "id": set_id(unfiltered_file[i]),
@@ -23,7 +23,7 @@ def filter_extra_data():
                 "image_id": set_image_id(unfiltered_file[i])
                 }
         combined_array.append(movie_object)
-    save_json(combined_array)
+    save_json(combined_array, "filtered")
 
 def get_curr_date(name):
     """ Returns current date combined with provided name """
@@ -31,16 +31,16 @@ def get_curr_date(name):
 
     return f"{curr_date}-{name}.json"
 
-def open_json():
+def open_json(name):
     """ Opens JSON-file and returns its content """
-    unfiltered_file = get_curr_date("unfiltered")
+    unfiltered_file = get_curr_date(name)
 
     with open (unfiltered_file, "r") as unfiltered:
         imported_json = json.load(unfiltered)
 
         return imported_json
 
-def save_json(combined_array):
+def save_json(combined_array, name):
     """ Saves a new JSON-file """
     filtered_file = get_curr_date("filtered")
     with open(filtered_file, "w") as filtered:
