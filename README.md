@@ -29,9 +29,7 @@ Currently executed manually as per needed.
 - Saves data to a new file. 
 - Assumes that will be run during the same day as scraper_2.0.py.
   
-#### combine_arrays_to_one.py
-- Saved in this repo for convenience.
 ## Future enhancements
  - Setup task to crontab to automatically run.
- - Fix scripts so that all filenames are set and opened dynamically.
- - Add command line parameters to update_to_mongo, so that can be used also for fetching data for debugging purposes. 
+ - Pylint & Pytest scripts
+ 
