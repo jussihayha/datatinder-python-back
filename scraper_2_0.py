@@ -4,7 +4,8 @@ import time
 import json
 import requests
 from dotenv import load_dotenv
-from filter_extra_data import get_curr_date, open_json, save_json
+from filter_extra_data import create_dated_json_filename, open_json, save_json
+
 
 def main():
     """ Starts script """
@@ -12,10 +13,11 @@ def main():
     fetch_data()
     print("Job complete")
 
+
 def fetch_data():
     """ Fetches data from YLE-api and saves to file """
     url = os.getenv('YLE_API_URL')
-    parameters = "&category=5-131&availability=ondemand&mediaobject=video&type=program&region=fi&offset=" 
+    parameters = "&category=5-131&availability=ondemand&mediaobject=video&type=program&region=fi&offset="
     offset = 0
     count = 0
     while True:
@@ -27,12 +29,12 @@ def fetch_data():
         time.sleep(12)
 
         if offset == 0:
-            new_file = get_curr_date("unfiltered")
+            new_file = create_dated_json_filename("unfiltered")
             with open(new_file, "w") as f:
                 json.dump(results['data'], f)
 
         else:
-            existing_file = get_curr_date("unfiltered")
+            existing_file = create_dated_json_filename("unfiltered")
             with open(existing_file) as f:
                 curr_data = json.load(f)
                 for i in range(len(results['data'])):
@@ -44,11 +46,13 @@ def fetch_data():
         if offset > count or offset == count:
             break
         else:
-            offset += 25
+            offset += 100
+
 
 def init():
     """ Initializes main-function. Used for achieving 100% test coverage """
     if __name__ == '__main__':
         sys.exit(main())
+
 
 init()
